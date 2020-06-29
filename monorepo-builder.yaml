@@ -8,6 +8,7 @@ parameters:
     # for "split" command
     directories_to_repositories:
         src/Microweber/Core: 'git@github.com:microweber-packages/microweber-core.git'
+        src/Microweber/Cms: 'git@github.com:microweber-packages/microweber-cms.git'
         src/Microweber/CaptchaManager: 'git@github.com:microweber-packages/microweber-captcha-manager.git'
         src/Microweber/TemplateManager: 'git@github.com:microweber-packages/microweber-template-manager.git'
         src/Microweber/BackupManager: 'git@github.com:microweber-packages/microweber-backup-manager.git'
