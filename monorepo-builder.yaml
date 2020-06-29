@@ -8,6 +8,7 @@ parameters:
     # for "split" command
     directories_to_repositories:
         src/Microweber/CaptchaManager: 'git@github.com:microweber-packages/microweber-captcha-manager.git'
+        src/Microweber/TemplateManager: 'git@github.com:microweber-packages/microweber-template-manager.git'
 
 services:
     # release workers - in order to execute
