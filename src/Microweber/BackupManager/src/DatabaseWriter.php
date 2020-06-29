@@ -1,24 +1,25 @@
 <?php
-namespace MicroweberPackages\BackupManager;
+namespace Microweber\Utils\Backup;
 
 use Illuminate\Support\Facades\Cache;
 
-use MicroweberPackages\BackupManager\Traits\DatabaseCustomFieldsWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseContentFieldsWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseContentDataWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseCategoryItemsWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseCategoriesWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseRelationWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseContentWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseMenusWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseMediaWriter;
-use MicroweberPackages\BackupManager\Loggers\BackupImportLogger;
-use MicroweberPackages\BackupManager\Traits\DatabaseModuleWriter;
-use MicroweberPackages\BackupManager\Traits\DatabaseTaggingTaggedWriter;
+use Microweber\Utils\Backup\Traits\DatabaseCustomFieldsWriter;
+use Microweber\Utils\Backup\Traits\DatabaseContentFieldsWriter;
+use Microweber\Utils\Backup\Traits\DatabaseContentDataWriter;
+use Microweber\Utils\Backup\Traits\DatabaseCategoryItemsWriter;
+use Microweber\Utils\Backup\Traits\DatabaseCategoriesWriter;
+use Microweber\Utils\Backup\Traits\DatabaseRelationWriter;
+use Microweber\Utils\Backup\Traits\DatabaseContentWriter;
+use Microweber\Utils\Backup\Traits\DatabaseMenusWriter;
+use Microweber\Utils\Backup\Traits\DatabaseMediaWriter;
+use Microweber\Utils\Backup\Loggers\BackupImportLogger;
+use Microweber\Utils\Backup\Traits\DatabaseModuleWriter;
+use Microweber\Utils\Backup\Traits\DatabaseTaggingTaggedWriter;
+use QueryPath\Exception;
 
 /**
  * Microweber - Backup Module Database Writer
- * @namespace MicroweberPackages\BackupManager
+ * @namespace Microweber\Utils\Backup
  * @package DatabaseWriter
  * @author Bozhidar Slaveykov
  */
@@ -118,7 +119,7 @@ class DatabaseWriter
 	
 	private function _saveItemDatabase($item) {
 		
-		if ($this->overwriteById  && isset($item['id'])) {
+		if ($this->overwriteById && isset($item['id'])) {
 			
 			// We will overwrite content by id from our db structure
 			$dbSelectParams = array();
@@ -251,9 +252,12 @@ class DatabaseWriter
 	 * @param array $item
 	 */
 	private function _saveItem($item) {
-		
+
 		$savedItem = $this->_saveItemDatabase($item);
-		
+        if ($this->overwriteById) {
+            return true; 
+        }
+
 		if ($savedItem) {
 			$this->_fixRelations($savedItem);
 			$this->_fixParentRelationship($savedItem);
@@ -288,7 +292,16 @@ class DatabaseWriter
 		var_dump($items);
 		return; */
 
+        if (isset($this->content->__table_structures)) {
+            app()->database_manager->build_tables($this->content->__table_structures);
+        }
+
 		foreach ($this->content as $table=>$items) {
+
+            if (!\Schema::hasTable($table)) {
+                continue;
+            }
+
 			if (!empty($items)) {
 				foreach($items as $item) {
 					$item['save_to_table'] = $table;
@@ -315,6 +328,10 @@ class DatabaseWriter
 			$this->_finishUp('runWriterWithBatchNothingToImport');
 			return array("success"=>"Nothing to import.");
 		}
+
+		if (isset($this->content->__table_structures)) {
+		    app()->database_manager->build_tables($this->content->__table_structures);
+        }
 		
 		//$importTables = array('users', 'categories', 'modules', 'comments', 'content', 'media', 'options', 'calendar', 'cart_orders');
 		//$importTables = array('content', 'categories');
@@ -323,7 +340,11 @@ class DatabaseWriter
 		// All db tables
 		$itemsForSave = array();
 		foreach ($this->content as $table=>$items) {
-			
+
+            if (!\Schema::hasTable($table)) {
+                continue;
+            }
+
 			if (in_array($table, $excludeTables)) {
 				continue;
 			}
@@ -403,7 +424,10 @@ class DatabaseWriter
                 if ($table == 'users' || $table == 'users_oauth' || $table == 'system_licenses') {
                     continue;
                 }
-                \DB::table($table)->truncate();
+                if (\Schema::hasTable($table)) {
+                    BackupImportLogger::setLogInfo('Truncate table: ' . $table);
+                    \DB::table($table)->truncate();
+                }
             }
         }
     }

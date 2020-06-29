@@ -1,13 +1,13 @@
 <?php
-namespace MicroweberPackages\BackupManager;
+namespace Microweber\Utils\Backup;
 
-use MicroweberPackages\BackupManager\Exporters\JsonExport;
-use MicroweberPackages\BackupManager\Exporters\CsvExport;
-use MicroweberPackages\BackupManager\Exporters\XmlExport;
-use MicroweberPackages\BackupManager\Exporters\ZipExport;
-use MicroweberPackages\BackupManager\Loggers\BackupExportLogger;
+use Microweber\Utils\Backup\Exporters\JsonExport;
+use Microweber\Utils\Backup\Exporters\CsvExport;
+use Microweber\Utils\Backup\Exporters\XmlExport;
+use Microweber\Utils\Backup\Exporters\ZipExport;
+use Microweber\Utils\Backup\Loggers\BackupExportLogger;
 use Microweber\App\Providers\Illuminate\Support\Facades\Cache;
-use MicroweberPackages\BackupManager\Exporters\XlsxExport;
+use Microweber\Utils\Backup\Exporters\XlsxExport;
 
 class Export
 {
@@ -16,7 +16,9 @@ class Export
 	public $type = 'json';
 	public $exportAllData = false;
 	public $includeMedia = false;
-	
+	public $includeModules = false;
+	public $includeTemplates = false;
+
 	public function setType($type)
 	{
 		$this->type = $type;
@@ -32,6 +34,14 @@ class Export
 	
 	public function setIncludeMedia($includeMedia) {
 		$this->includeMedia = $includeMedia;
+	}
+
+	public function setIncludeModules($includeModules) {
+		$this->includeModules = $includeModules;
+	}
+
+	public function setIncludeTemplates($includeTemplates) {
+		$this->includeTemplates = $includeTemplates;
 	}
 	
 	public function exportAsType($data)
@@ -51,7 +61,15 @@ class Export
 		if (isset($export['files']) && count($export['files']) > 1) {
 			$exportWithZip = true;
 		}
-		
+
+		if ($this->includeModules) {
+		    $exportWithZip = true;
+        }
+
+        if ($this->includeTemplates) {
+            $exportWithZip = true;  
+        }
+
 		if ($exportWithZip || $exportMediaUserFiles) {
 
 			// Make Zip
@@ -75,6 +93,14 @@ class Export
 			
 			if ($this->includeMedia == false) {
 				$zipExport->setExportMedia(false);
+			}
+
+			if ($this->includeModules) {
+				$zipExport->setExportModules($this->includeModules);
+			}
+
+			if ($this->includeTemplates) {
+				$zipExport->setExportTemplates($this->includeTemplates);
 			}
 
 			$zipExportReady = $zipExport->start();
@@ -158,9 +184,30 @@ class Export
 		
 		$exportTables = new ExportTables();
 
-		foreach($this->_getTablesForExport() as $table) {			
+        $tablesStructures = array();
+
+		foreach($this->_getTablesForExport() as $table) {
+
 			BackupExportLogger::setLogInfo('Exporting table: <b>' . $table. '</b>');
-			
+
+            $tableFields = app()->database_manager->get_fields($table);
+            if($tableFields){
+                $tableFieldsStructure = array();
+                foreach ($tableFields as $tableField){
+                    $tableFieldType = \DB::getSchemaBuilder()->getColumnType($table, $tableField);
+                    $tableFieldsStructure[$tableField] = $tableFieldType;
+                }
+                $tablesStructures[$table] = $tableFieldsStructure;
+            }
+
+            if ($this->exportAllData) {
+                $tableContent = $this->_getTableContent($table);
+                if (!empty($tableContent)) {
+                    $exportTables->addItemsToTable($table, $tableContent);
+                }
+                continue;
+            }
+
 			$ids = array();
 			
 			if ($table == 'categories') {
@@ -216,8 +263,11 @@ class Export
 				
 			}
 		}
-		
-		return $exportTables->getAllTableItems();
+
+		$exportTablesReady = $exportTables->getAllTableItems();
+		$exportTablesReady['__table_structures'] = $tablesStructures;
+
+		return $exportTablesReady;
 	}
 	
 	private function _getTableContent($table, $ids = array()) {
@@ -298,7 +348,7 @@ class Export
 		
 		$skipTables = $this->_prepareSkipTables();
 		
-		$tablesList = mw()->database_manager->get_tables_list();
+		$tablesList = mw()->database_manager->get_tables_list(true);
 		$tablePrefix = mw()->database_manager->get_prefix();
 		
 		$readyTableList = array();

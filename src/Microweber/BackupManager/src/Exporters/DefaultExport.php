@@ -1,8 +1,8 @@
 <?php
-namespace MicroweberPackages\BackupManager\Exporters;
+namespace Microweber\Utils\Backup\Exporters;
 
-use MicroweberPackages\BackupManager\Exporters\Interfaces\ExportInterface;
-use MicroweberPackages\BackupManager\BackupManager;
+use Microweber\Utils\Backup\Exporters\Interfaces\ExportInterface;
+use Microweber\Utils\Backup\BackupManager;
 
 class DefaultExport implements ExportInterface
 {
@@ -28,15 +28,15 @@ class DefaultExport implements ExportInterface
 	{
 		$backupManager = new BackupManager();
 		$exportLocation = $backupManager->getBackupLocation();
-
+		
 		if ($name) {
 			$exportFilename = $name . '.' . $this->type;
 		} else {
 			$exportFilename = 'backup_export_' . date("Y-m-d-his") . '.' . $this->type;
 		}
-
+		
 		return array(
-			'download' => api_url('BackupV2/download?file=' . $exportFilename),
+			'download' => api_url('Microweber/Utils/BackupV2/download?file=' . $exportFilename),
 			'filepath' => $exportLocation . $exportFilename,
 			'filename' => $exportFilename
 		);

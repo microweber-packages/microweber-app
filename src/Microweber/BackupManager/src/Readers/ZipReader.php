@@ -1,9 +1,8 @@
 <?php
-namespace MicroweberPackages\BackupManager\Readers;
+namespace Microweber\Utils\Backup\Readers;
 
-use MicroweberPackages\BackupManager\BackupManager;
-use MicroweberPackages\BackupManager\Loggers\BackupImportLogger;
-use MicroweberPackages\Utils\Zip\Unzip;
+use Microweber\Utils\Backup\BackupManager;
+use Microweber\Utils\Backup\Loggers\BackupImportLogger;
 
 class ZipReader extends DefaultReader
 {
@@ -20,32 +19,32 @@ class ZipReader extends DefaultReader
 	public function readData()
 	{
 		$filesForImporting = array();
-
+		
 		$this->_checkPathsExists();
-
+		
 		BackupImportLogger::setLogInfo('Unzipping '.basename($this->file).' in userfiles...');
-
+		
 		$backupManager = new BackupManager();
 		$backupLocation = $backupManager->getBackupLocation(). 'temp_backup_zip/';
 
 		// Remove old files
 		$this->_removeFilesFromPath($backupLocation);
-
-		$unzip = new Unzip();
+		
+		$unzip = new \Microweber\Utils\Unzip();
 		$unzip->extract($this->file, $backupLocation, true);
 
-
+		
 		if ($backupLocation != false and is_dir($backupLocation)) {
 			BackupImportLogger::setLogInfo('Media restored!');
 			$copy = $this->_cloneDirectory($backupLocation, userfiles_path());
 		}
-
+		
 		$mwContentJsonFile = $backupLocation. 'mw_content.json';
-
+		
 		if (is_file($mwContentJsonFile)) {
 			$filesForImporting[] = array("file"=>$mwContentJsonFile, "reader"=>"json");
 		}
-
+		
 		// Find data to import
 		$tables = $this->_getTableList();
 		$supportedReaders =  $this->_getSupportedReaders();
@@ -59,7 +58,7 @@ class ZipReader extends DefaultReader
 			$importToTable = str_replace('.'.$fileExtension, false, $filename);
 
 			$addToImport = false;
-
+			
 			if (strpos($importToTable, 'backup_export') !== false) {
 				$addToImport = true;
 			}
@@ -67,15 +66,15 @@ class ZipReader extends DefaultReader
             if (strpos($importToTable, 'mw_content') !== false && strpos($importToTable, '_lang') !== false) {
                 $addToImport = true;
             }
-
+			
 			if (in_array($fileExtension, $supportedReaders) && in_array($importToTable, $tables)) {
 				$addToImport = true;
 			}
-
+			
 			if ($addToImport) {
 				$filesForImporting[] = array("file"=>$file, "importToTable"=> $importToTable, "reader"=>$fileExtension);
 			}
-
+			
 		}
 
 		if (empty($filesForImporting)) {
@@ -120,15 +119,15 @@ class ZipReader extends DefaultReader
                 $filesForImporting = $newFilesForImporting;
             }
         }
-
+        
 		// Decode files in zip
 		$readedData = array();
 		foreach ($filesForImporting as $file) {
-
+			
 			$readerClass = 'Microweber\\Utils\\Backup\\Readers\\' . ucfirst($file['reader']) . 'Reader';
 			$reader = new $readerClass($file['file']);
 			$data = $reader->readData();
-
+			
 			if (strpos($importToTable, 'backup_export') !== false) {
 				$readedData = $data;
 			} else if (strpos($importToTable, 'mw_content') !== false) {
@@ -142,17 +141,17 @@ class ZipReader extends DefaultReader
 			}
 
 		}
-
+		
 		if (empty($readedData)) {
 			BackupImportLogger::setLogInfo('The files in zip are empty. Nothing to import.');
 			return;
 		}
-
+		
 		return $readedData;
 	}
-
+	
 	private function _getSupportedReaders() {
-
+		
 		$readers = array();
 		$readersFolder = normalize_path(MW_PATH  . 'Utils/Backup/Readers');
 		$readersList = scandir($readersFolder);
@@ -160,33 +159,33 @@ class ZipReader extends DefaultReader
 			if (!is_file($readersFolder . $file)) {
 				continue;
 			}
-
+			
 			$ext = str_replace('Reader.php', false, $file);
 			$ext = strtolower($ext);
-
+			
 			if ($ext == 'default' || $ext == 'zip') {
-				continue;
+				continue;	
 			}
-
+			
 			$readers[] = $ext;
-
+			
 		}
-
+		
 		return $readers;
 	}
-
+	
 	private function _getTableList() {
-
+		
 		$readyTables = array();
-
+		
 		$tables = mw()->database_manager->get_tables_list();
 		foreach ($tables as $table) {
-			$readyTables[] = str_replace(mw()->database_manager->get_prefix(), false, $table);
+			$readyTables[] = str_replace(mw()->database_manager->get_prefix(), false, $table);	
 		}
-
+		
 		return $readyTables;
 	}
-
+	
 	/**
 	 * Remove dir recursive
 	 * @param string $dir
@@ -197,31 +196,34 @@ class ZipReader extends DefaultReader
 			return;
 		}
 
-		$files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
-
-		foreach ($files as $fileinfo) {
-			$todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-			@$todo($fileinfo->getRealPath());
-		}
+		try {
+            $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($files as $fileinfo) {
+                $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                @$todo($fileinfo->getRealPath());
+            }
+        } catch (\Exception $e) {
+		    // Cant remove files from this path
+        }
 
 		@rmdir($dir);
 	}
-
+	
 	private function _checkPathsExists() {
-
+		
 		if (userfiles_path()) {
 			if (!is_dir(userfiles_path())) {
 				mkdir_recursive(userfiles_path());
 			}
 		}
-
+		
 		if (media_base_path()) {
 			if (!is_dir(media_base_path())) {
 				mkdir_recursive(media_base_path());
 			}
 		}
 	}
-
+	
 	/**
 	 * Clone directory by path and destination
 	 * @param stringh $source

@@ -1,10 +1,8 @@
 <?php
-namespace MicroweberPackages\BackupManager;
+namespace Microweber\Utils\Backup;
 
-use MicroweberPackages\BackupManager\Export;
-use MicroweberPackages\BackupManager\Import;
-use MicroweberPackages\BackupManager\Loggers\BackupImportLogger;
-use MicroweberPackages\BackupManager\Loggers\BackupExportLogger;
+use Microweber\Utils\Backup\Loggers\BackupImportLogger;
+use Microweber\Utils\Backup\Loggers\BackupExportLogger;
 
 class BackupManager
 {
@@ -12,6 +10,8 @@ class BackupManager
 	public $exportData = ['categoryIds'=>[], 'contentIds'=>[], 'tables'=>[]];
 	public $exportType = 'json';
 	public $exportIncludeMedia = false;
+	public $exportIncludeModules = false;
+	public $exportIncludeTemplates = false;
 	public $importType = false;
 	public $importFile = false;
 	public $importBatch = true;
@@ -29,16 +29,16 @@ class BackupManager
 			set_time_limit(0);
 		}
 	}
-
+	
 	/**
 	 * Set logger
 	 * @param class $logger
 	 */
 	public function setLogger($logger) {
-
+		
 		BackupImportLogger::setLogger($logger);
 		BackupExportLogger::setLogger($logger);
-
+		
 	}
 
 	/**
@@ -48,7 +48,7 @@ class BackupManager
 	public function setExportAllData($exportAllData = true) {
 		$this->exportAllData = $exportAllData;
 	}
-
+	
 	/**
 	 * Set export file format
 	 * @param string $type
@@ -57,7 +57,7 @@ class BackupManager
 	{
 		$this->exportType = $type;
 	}
-
+	
 	/**
 	 * Set wich data want to export
 	 * @param array $data
@@ -70,19 +70,27 @@ class BackupManager
 		$this->exportIncludeMedia = $includeMedia;
 	}
 
+	public function setExportIncludeModules($includeModules) {
+		$this->exportIncludeModules = $includeModules;
+	}
+
+	public function setExportIncludeTemplates($includeTemplates) {
+		$this->exportIncludeTemplates = $includeTemplates;
+	}
+
 	/**
 	 * Set import file format
 	 * @param string $type
 	 */
-	public function setImportType($type)
+	public function setImportType($type) 
 	{
 		$this->importType = $type;
 	}
-
+	
 	public function setImportBatch($importBatch) {
 		$this->importBatch = $importBatch;
 	}
-
+	
 	public function setImportOvewriteById($overwrite) {
 		$this->importOvewriteById = $overwrite;
 	}
@@ -95,12 +103,12 @@ class BackupManager
 	 * Set import file path
 	 * @param string $file
 	 */
-	public function setImportFile($file)
+	public function setImportFile($file) 
 	{
 		if (! is_file($file)) {
 			return array('error' => 'Backup Manager: You have not provided a existing backup to restore.');
 		}
-
+		
 		$this->setImportType(pathinfo($file, PATHINFO_EXTENSION));
 		$this->importFile = $file;
 	}
@@ -113,23 +121,25 @@ class BackupManager
 	 * Start exporting
 	 * @return string[]
 	 */
-	public function startExport()
+	public function startExport() 
 	{
 		try {
-
+			
 			/* // If we want export media
 			if (in_array('media', $this->exportData['tables']) || $this->exportAllData == true) {
 				$this->exportType = 'zip';
 			} */
-
+			
 			$export = new Export();
 			$export->setType($this->exportType);
 			$export->setExportData($this->exportData);
 			$export->setExportAllData($this->exportAllData);
 			$export->setIncludeMedia($this->exportIncludeMedia);
+			$export->setIncludeModules($this->exportIncludeModules);
+			$export->setIncludeTemplates($this->exportIncludeTemplates);
 
 			return $export->start();
-
+		
 		} catch (\Exception $e) {
 			return array("error"=>$e->getMessage(), "file"=>$e->getFile(), "code"=>$e->getCode(), "line"=>$e->getLine());
 		}
@@ -140,7 +150,7 @@ class BackupManager
 	 * Start importing
 	 * @return array
 	 */
-	public function startImport()
+	public function startImport() 
 	{
 		try {
 			$import = new Import();
@@ -156,7 +166,7 @@ class BackupManager
             if (isset($content['must_choice_language']) && $content['must_choice_language']) {
                 return $content;
             }
-
+			
 			$writer = new DatabaseWriter();
 			$writer->setContent($content['data']);
 			$writer->setOverwriteById($this->importOvewriteById);
@@ -167,9 +177,9 @@ class BackupManager
 			} else {
 				$writer->runWriter();
 			}
-
+			
 			return $writer->getImportLog();
-
+			
 		} catch (\Exception $e) {
 			return array("file"=>$e->getFile(), "line"=>$e->getLine(), "error"=>$e->getMessage());
 		}
@@ -179,10 +189,10 @@ class BackupManager
 	 * Get backup location path.
 	 * @return string
 	 */
-	public function getBackupLocation()
+	public function getBackupLocation() 
 	{
 		$backupContent = storage_path() . '/backup_content/' . \App::environment(). '/';
-
+		
 		if (! is_dir($backupContent)) {
 			mkdir_recursive($backupContent);
 			$htaccess = $backupContent . '.htaccess';

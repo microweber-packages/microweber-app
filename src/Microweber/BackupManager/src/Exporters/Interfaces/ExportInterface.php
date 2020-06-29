@@ -1,7 +1,8 @@
 <?php
-namespace MicroweberPackages\BackupManager\Exporters\Interfaces;
+namespace Microweber\Utils\Backup\Exporters\Interfaces;
 
 interface ExportInterface
 {
+
 	public function start();
 } 

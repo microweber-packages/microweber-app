@@ -1,7 +1,7 @@
 <?php
-namespace MicroweberPackages\BackupManager\Traits;
+namespace Microweber\Utils\Backup\Traits;
 
-use MicroweberPackages\BackupManager\DatabaseSave;
+use Microweber\Utils\Backup\DatabaseSave;
 
 trait DatabaseMenusWriter
 {

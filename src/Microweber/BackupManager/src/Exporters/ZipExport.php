@@ -1,7 +1,7 @@
 <?php
-namespace MicroweberPackages\BackupManager\Exporters;
+namespace Microweber\Utils\Backup\Exporters;
 
-use MicroweberPackages\BackupManager\Loggers\BackupExportLogger;
+use Microweber\Utils\Backup\Loggers\BackupExportLogger;
 
 class ZipExport extends DefaultExport
 {
@@ -34,7 +34,19 @@ class ZipExport extends DefaultExport
 	 * @var string
 	 */
 	public $exportMedia = false;
-	
+
+    /**
+     * Export modules
+     * @var bool
+     */
+	public $exportModules = false;
+
+    /**
+     * Export templates
+     * @var bool
+     */
+	public $exportTemplates = false;
+
 	/**
 	 * The name of cache group for backup file.
 	 * @var string
@@ -63,6 +75,14 @@ class ZipExport extends DefaultExport
 	
 	public function setExportMedia($bool) {
 		$this->exportMedia = $bool;
+	}
+
+	public function setExportModules($modules) {
+		$this->exportModules = $modules;
+	}
+
+	public function setExportTemplates($templates) {
+		$this->exportTemplates = $templates;
 	}
 	
 	public function addFile($file) {
@@ -103,6 +123,16 @@ class ZipExport extends DefaultExport
 			$userFiles = $this->_getUserFilesPaths();
 			$filesForZip = array_merge($filesForZip, $userFiles);
 		}
+
+		if ($this->exportModules) {
+            $userFilesModules = $this->_getUserFilesModulesPaths();
+            $filesForZip = array_merge($filesForZip, $userFilesModules);
+        }
+
+		if ($this->exportTemplates) {
+            $userFilesTemplates = $this->_getUserFilesTemplatesPaths();
+            $filesForZip = array_merge($filesForZip, $userFilesTemplates);
+        }
 		
 		/* 
 		if (empty($filesForZip)) {
@@ -169,6 +199,67 @@ class ZipExport extends DefaultExport
 	public function clearSteps() {
 		cache_delete($this->_cacheGroupName);
 	}
+
+	protected function _getUserFilesTemplatesPaths()
+    {
+        $allTemplatesFiles = array();
+        $templatesFilesReady = array();
+
+        $userFilesPathTemplates = userfiles_path() . DIRECTORY_SEPARATOR . 'templates';
+
+        foreach ($this->exportTemplates as $template) {
+            $templateDir = $userFilesPathTemplates . DIRECTORY_SEPARATOR . $template;
+            $templateFiles = $this->_getDirContents($templateDir);
+
+            $allTemplatesFiles = array_merge($allTemplatesFiles, $templateFiles);
+        }
+
+        foreach($allTemplatesFiles as $filePath) {
+
+            $dataFile = str_replace(userfiles_path() . DIRECTORY_SEPARATOR, false, $filePath);
+
+            $dataFile = normalize_path($dataFile, false);
+            $filePath =  normalize_path($filePath, false);
+
+            $templatesFilesReady[] = array(
+                'filename'=>$dataFile,
+                'filepath'=>$filePath
+            );
+        }
+
+        return $templatesFilesReady;
+    }
+
+	protected function _getUserFilesModulesPaths()
+    {
+
+        $allModulesFiles = array();
+        $modulesFilesReady = array();
+
+        $userFilesPathModules = userfiles_path() . DIRECTORY_SEPARATOR . 'modules';
+
+        foreach ($this->exportModules as $module) {
+            $moduleDir = $userFilesPathModules . DIRECTORY_SEPARATOR . $module;
+            $moduleFiles = $this->_getDirContents($moduleDir);
+
+            $allModulesFiles = array_merge($allModulesFiles, $moduleFiles);
+        }
+
+        foreach($allModulesFiles as $filePath) {
+
+            $dataFile = str_replace(userfiles_path() . DIRECTORY_SEPARATOR, false, $filePath);
+
+            $dataFile = normalize_path($dataFile, false);
+            $filePath =  normalize_path($filePath, false);
+
+            $modulesFilesReady[] = array(
+                'filename'=>$dataFile,
+                'filepath'=>$filePath
+            );
+        }
+
+        return $modulesFilesReady;
+    }
 	
 	protected function _getUserFilesPaths() {
 		

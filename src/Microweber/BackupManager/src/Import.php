@@ -1,13 +1,13 @@
 <?php
-namespace MicroweberPackages\BackupManager;
+namespace Microweber\Utils\Backup;
 
-use MicroweberPackages\BackupManager\Readers\ZipReader;
-use MicroweberPackages\BackupManager\Readers\JsonReader;
-use MicroweberPackages\BackupManager\Readers\CsvReader;
-use MicroweberPackages\BackupManager\Readers\XmlReader;
-use MicroweberPackages\BackupManager\Readers\XlsxReader;
-
-use MicroweberPackages\BackupManager\Loggers\BackupImportLogger;
+use Microweber\Utils\Backup\Readers\ZipReader;
+use Microweber\Utils\Backup\Readers\JsonReader;
+use Microweber\Utils\Backup\Readers\CsvReader;
+use Microweber\Utils\Backup\Readers\XmlReader;
+use Microweber\App\Providers\Illuminate\Support\Facades\Cache;
+use Microweber\Utils\Backup\Loggers\BackupImportLogger;
+use Microweber\Utils\Backup\Readers\XlsxReader;
 
 class Import
 {
@@ -17,7 +17,7 @@ class Import
 	 *
 	 * @var string
 	 */
-	public $type;
+	public $type; 
 
 	/**
 	 * The import file path
@@ -55,7 +55,7 @@ class Import
 	public function setLanguage($abr) {
 	    $this->language = $abr;
     }
-
+	
 	/**
 	 * Import data as type
 	 *
@@ -102,8 +102,8 @@ class Import
 
 		if ($currentStep == 0) {
 			// This is frist step
-			\Cache::forget(md5($this->file));
-			return \Cache::rememberForever(md5($this->file), function () {
+			Cache::forget(md5($this->file));
+			return Cache::rememberForever(md5($this->file), function () {
 				BackupImportLogger::setLogInfo('Start importing session..');
 
 				return $this->importAsType($this->file);
@@ -113,7 +113,7 @@ class Import
 			// BackupImportLogger::setLogInfo('Read content from cache..');
 
 			// This is for the next steps from wizard
-			return \Cache::get(md5($this->file));
+			return Cache::get(md5($this->file));
 		}
 	}
 
@@ -170,7 +170,7 @@ class Import
 	 * Get file reader by type
 	 *
 	 * @param array $data
-	 * @return boolean|\MicroweberPackages\BackupManager\Readers\DefaultReader
+	 * @return boolean|\Microweber\Utils\Backup\Readers\DefaultReader
 	 */
 	private function _getReader($data = array())
 	{
@@ -204,7 +204,7 @@ class Import
 		}
 
 		$data = $reader->readData();
-
+		
 		return $this->_recognizeDataTableName($data);
 	}
 }
