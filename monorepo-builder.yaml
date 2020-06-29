@@ -9,6 +9,7 @@ parameters:
     directories_to_repositories:
         src/Microweber/CaptchaManager: 'git@github.com:microweber-packages/microweber-captcha-manager.git'
         src/Microweber/TemplateManager: 'git@github.com:microweber-packages/microweber-template-manager.git'
+        src/Microweber/BackupManager: 'git@github.com:microweber-packages/microweber-backup-manager.git'
 
 services:
     # release workers - in order to execute
