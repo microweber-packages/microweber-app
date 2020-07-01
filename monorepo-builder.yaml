@@ -15,6 +15,7 @@ parameters:
         src/Microweber/FormsManager: 'git@github.com:microweber-packages/microweber-forms-manager.git'
         src/Microweber/EventManager: 'git@github.com:microweber-packages/microweber-event-manager.git'
         src/Microweber/PackageManager: 'git@github.com:microweber-packages/microweber-package-manager.git'
+        src/Microweber/Utils: 'git@github.com:microweber-packages/microweber-utils.git'
 
 services:
     # release workers - in order to execute
