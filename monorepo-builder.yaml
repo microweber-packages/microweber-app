@@ -16,6 +16,8 @@ parameters:
         src/Microweber/EventManager: 'git@github.com:microweber-packages/microweber-event-manager.git'
         src/Microweber/PackageManager: 'git@github.com:microweber-packages/microweber-package-manager.git'
         src/Microweber/OptionManager: 'git@github.com:microweber-packages/microweber-option-manager.git'
+        src/Microweber/UserManager: 'git@github.com:microweber-packages/microweber-database-manager.git'
+        src/Microweber/DatabaseManager: 'git@github.com:microweber-packages/microweber-user-manager.git'
         src/Microweber/Utils: 'git@github.com:microweber-packages/microweber-utils.git'
         src/Microweber/Shop: 'git@github.com:microweber-packages/microweber-shop.git'
         src/Microweber/Helpers: 'git@github.com:microweber-packages/microweber-helpers.git'
