@@ -1,0 +1,989 @@
+<?php
+
+namespace MicroweberPackages\App\Providers;
+
+use Fruitcake\LaravelDebugbar\Facades\Debugbar;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Jenssegers\Agent\Agent;
+use MicroweberPackages\Admin\Filament\FilamentAdminPanelProvider;
+use MicroweberPackages\App\Console\Commands\ServeCodeCoverageTestCommand;
+use MicroweberPackages\App\Console\Commands\ServeTestCommand;
+use MicroweberPackages\App\Http\Middleware\AuthenticateSessionForUser;
+use MicroweberPackages\App\Http\Middleware\LocaleRedirectMiddleware;
+use MicroweberPackages\App\Http\Middleware\TrimStrings;
+use MicroweberPackages\App\Utils\Parser;
+use MicroweberPackages\Console\Commands\AddLicenseKeyCommand;
+use MicroweberPackages\Console\Commands\ModuleCommand;
+use MicroweberPackages\Console\Commands\PackageInstallCommand;
+use MicroweberPackages\Console\Commands\ReloadDatabaseCommand;
+use MicroweberPackages\Console\Commands\UpdateCommand;
+use MicroweberPackages\Console\Commands\MakeDuskColorPaletteTestCommand;
+use MicroweberPackages\Console\Commands\VendorAssetsSymlinkCommand;
+use MicroweberPackages\Core\CoreServiceProvider;
+use MicroweberPackages\Dusk\DuskPackageServiceProvider;
+use MicroweberPackages\Filament\Providers\MicroweberFilamentServiceProvider;
+use MicroweberPackages\FilamentRegistry\FilamentRegistryManager;
+use MicroweberPackages\FilamentRegistry\FilamentRegistryServiceProvider;
+use MicroweberPackages\Format\FormatService;
+use MicroweberPackages\Install\Console\Commands\InstallCommand;
+use MicroweberPackages\DbMigrator\MicroweberMigrator;
+use MicroweberPackages\Config\ConfigServiceProvider;
+use MicroweberPackages\App\Providers\MicroweberServiceProvider;
+use MicroweberPackages\Multilanguage\Http\Middleware\MultilanguageMiddleware;
+use MicroweberPackages\Multilanguage\MultilanguageHelpers;
+use MicroweberPackages\Option\Console\Commands\OptionCommand;
+use MicroweberPackages\Http\HttpService;
+use MicroweberPackages\ClassLoader\ClassLoaderService;
+use MicroweberPackages\ClassLoader\PathNormalizer;
+use Modules\Content\Models\Content;
+use Modules\Media\Models\Media;
+use MicroweberPackages\Database\Facades\DatabaseManager;
+use MicroweberPackages\Event\Facades\EventManager;
+
+
+// Shop
+
+if (!defined('MW_VERSION')) {
+    include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+}
+
+class AppServiceProvider extends ServiceProvider
+{
+
+    protected $aliasInstance;
+
+    /*
+    * Application Service Providers...
+    */
+    public $laravel_providers = [
+        \Illuminate\Translation\TranslationServiceProvider::class,
+
+        \Illuminate\Auth\AuthServiceProvider::class,
+        \Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        \Illuminate\Bus\BusServiceProvider::class,
+        \Illuminate\Cache\CacheServiceProvider::class,
+        \Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        \Illuminate\Cookie\CookieServiceProvider::class,
+        \Illuminate\Database\DatabaseServiceProvider::class,
+        \Illuminate\Encryption\EncryptionServiceProvider::class,
+        \Illuminate\Filesystem\FilesystemServiceProvider::class,
+        \Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        \Illuminate\Hashing\HashServiceProvider::class,
+        \Illuminate\Mail\MailServiceProvider::class,
+        \Illuminate\Notifications\NotificationServiceProvider::class,
+        \MicroweberPackages\Pagination\PaginationServiceProvider::class,
+        \Illuminate\Pipeline\PipelineServiceProvider::class,
+        \Illuminate\Queue\QueueServiceProvider::class,
+        \Illuminate\Redis\RedisServiceProvider::class,
+        \Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        \Illuminate\Session\SessionServiceProvider::class,
+        \Illuminate\Validation\ValidationServiceProvider::class,
+        \Illuminate\View\ViewServiceProvider::class,
+
+//        \Illuminate\Session\SessionServiceProvider::class,
+//        //  \Illuminate\Filesystem\FilesystemServiceProvider::class,
+//        \Illuminate\Auth\AuthServiceProvider::class,
+//        \Illuminate\Broadcasting\BroadcastServiceProvider::class,
+//        \Illuminate\Bus\BusServiceProvider::class,
+//        \Illuminate\Cache\CacheServiceProvider::class,
+//        \Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+//        \Illuminate\Cookie\CookieServiceProvider::class,
+//        \Illuminate\Database\DatabaseServiceProvider::class,
+//        \Illuminate\Encryption\EncryptionServiceProvider::class,
+//        \Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+//        \Illuminate\Hashing\HashServiceProvider::class,
+//        \Illuminate\Mail\MailServiceProvider::class,
+//        \Illuminate\Notifications\NotificationServiceProvider::class,
+//        \MicroweberPackages\Pagination\PaginationServiceProvider::class,
+//        \Illuminate\Pipeline\PipelineServiceProvider::class,
+//        \Illuminate\Queue\QueueServiceProvider::class,
+//        \Illuminate\Redis\RedisServiceProvider::class,
+//        \Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+//        \Illuminate\Validation\ValidationServiceProvider::class,
+//        \Illuminate\View\ViewServiceProvider::class,
+
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class Aliases
+    |--------------------------------------------------------------------------
+    |
+    | This array of class aliases will be registered when this application
+    | is started. However, feel free to register as many as you wish as
+    | the aliases are "lazy" loaded so they don't hinder performance.
+    |
+    */
+
+    public $laravel_aliases = [
+//        'App' => \Illuminate\Support\Facades\App::class,
+//        'Arr' => \Illuminate\Support\Arr::class,
+//        'Artisan' => \Illuminate\Support\Facades\Artisan::class,
+//        'Auth' => \Illuminate\Support\Facades\Auth::class,
+//        'Blade' => \Illuminate\Support\Facades\Blade::class,
+//        'Broadcast' => \Illuminate\Support\Facades\Broadcast::class,
+//        'Bus' => \Illuminate\Support\Facades\Bus::class,
+        //       'Cache' => \Illuminate\Support\Facades\Cache::class,
+//        'Config' => \Illuminate\Support\Facades\Config::class,
+//        'Cookie' => \Illuminate\Support\Facades\Cookie::class,
+//        'Crypt' => \Illuminate\Support\Facades\Crypt::class,
+//        'DB' => \Illuminate\Support\Facades\DB::class,
+//        'Eloquent' => \Illuminate\Database\Eloquent\Models::class,
+//        'Event' => \Illuminate\Support\Facades\Event::class,
+//        //  'File' => \Illuminate\Support\Facades\File::class,
+//        'Gate' => \Illuminate\Support\Facades\Gate::class,
+//        'Hash' => \Illuminate\Support\Facades\Hash::class,
+//        'Http' => \Illuminate\Support\Facades\Http::class,
+//        'Lang' => \Illuminate\Support\Facades\Lang::class,
+//        'Log' => \Illuminate\Support\Facades\Log::class,
+//        'Mail' => \Illuminate\Support\Facades\Mail::class,
+//        'Notification' => \Illuminate\Support\Facades\Notification::class,
+//        'Password' => \Illuminate\Support\Facades\Password::class,
+//        'Queue' => \Illuminate\Support\Facades\Queue::class,
+//        'Redirect' => \Illuminate\Support\Facades\Redirect::class,
+//        'Redis' => \Illuminate\Support\Facades\Redis::class,
+//        'Request' => \Illuminate\Support\Facades\Request::class,
+//        'Response' => \Illuminate\Support\Facades\Response::class,
+//        'Route' => \Illuminate\Support\Facades\Route::class,
+//        'Schema' => \Illuminate\Support\Facades\Schema::class,
+//          'Session' => \Illuminate\Support\Facades\Session::class,
+//        'Storage' => \Illuminate\Support\Facades\Storage::class,
+//        'Str' => \Illuminate\Support\Str::class,
+//        'URL' => \Illuminate\Support\Facades\URL::class,
+//        'Validator' => \Illuminate\Support\Facades\Validator::class,
+//        'View' => \Illuminate\Support\Facades\View::class,
+//        'PDF' => \Barryvdh\DomPDF\Facade::class
+    ];
+
+    public function __construct($app)
+    {
+        //$this->loadPackagesComposerJson();
+
+        // Early instance-based class loader (bound before package providers boot).
+        // Replaces the former static ClassLoader to avoid memory leaks and path dupes.
+        $classLoader = new ClassLoaderService(new PathNormalizer(), true);
+        $classLoader->addDirectories([
+            modules_path(),
+            __DIR__,
+        ]);
+        $classLoader->register();
+        $app->instance(ClassLoaderService::class, $classLoader);
+
+        // Module autoloading is handled by this same ClassLoader (its registered
+        // spl_autoload handler resolves Modules\… under modules_path()) plus
+        // Composer's PSR-4 `Modules\` map — no separate autoload callback needed.
+
+        $this->aliasInstance = AliasLoader::getInstance();
+
+        parent::__construct($app);
+    }
+
+    public function register()
+    {
+        //  return;
+        //app()->usePublicPath(base_path());
+
+        // When microweber is the root Laravel app, config/microweber.php is auto-loaded
+        // from the project config/ dir. When microweber is required as a DEPENDENCY into
+        // a host app, Laravel only loads the HOST's config/, so the bundled microweber
+        // config — incl. is_installed => env('MW_IS_INSTALLED'), admin_url, etc. — is
+        // never loaded, mw_is_installed() returns false and the frontend falls through to
+        // the setup wizard. Merge it in explicitly when absent. Resolve the package root
+        // portably (monorepo root OR vendor/microweber/microweber). The empty() guard
+        // makes this a NO-OP in the monorepo (config already loaded) and the fix in a host.
+        if (empty(config('microweber'))) {
+            $mwConfigFile = null;
+            if (class_exists(\Composer\InstalledVersions::class)
+                && \Composer\InstalledVersions::isInstalled('microweber/microweber')) {
+                $mwRoot = \Composer\InstalledVersions::getInstallPath('microweber/microweber');
+                if ($mwRoot && is_file(rtrim($mwRoot, '/\\') . '/config/microweber.php')) {
+                    $mwConfigFile = rtrim($mwRoot, '/\\') . '/config/microweber.php';
+                }
+            }
+            if ($mwConfigFile === null) {
+                $fallback = __DIR__ . '/../../../../config/microweber.php';
+                if (is_file($fallback)) {
+                    $mwConfigFile = $fallback;
+                }
+            }
+            if ($mwConfigFile !== null) {
+                $this->mergeConfigFrom($mwConfigFile, 'microweber');
+            }
+        }
+
+        // blade-icons' "default" set path is 'resources/svg' (resolved against base_path):
+        // present in the monorepo, absent in a host app, where blade-icons throws
+        // CannotRegisterIconSet on the first icon render. Provide the directory in the host
+        // by symlinking it to microweber's bundled resources/svg (and any other base_path
+        // code that reads it then resolves too). Guarded + idempotent; no-op in the monorepo
+        // where base_path('resources/svg') already exists. Mirrors microweber's existing
+        // bootstrap filesystem setup (storage symlink, etc.).
+        $hostSvg = base_path('resources/svg');
+        if (! is_dir($hostSvg) && ! is_link($hostSvg)) {
+            $bundledSvg = null;
+            if (class_exists(\Composer\InstalledVersions::class)
+                && \Composer\InstalledVersions::isInstalled('microweber/microweber')) {
+                $r = \Composer\InstalledVersions::getInstallPath('microweber/microweber');
+                if ($r && is_dir(rtrim($r, '/\\') . '/resources/svg')) {
+                    $bundledSvg = rtrim($r, '/\\') . '/resources/svg';
+                }
+            }
+            if ($bundledSvg === null) {
+                $fb = __DIR__ . '/../../../../resources/svg';
+                if (is_dir($fb)) {
+                    $bundledSvg = $fb;
+                }
+            }
+            if ($bundledSvg !== null) {
+                if (! is_dir(dirname($hostSvg))) {
+                    @mkdir(dirname($hostSvg), 0777, true);
+                }
+                // Prefer a symlink (shares the real icons); fall back to the config path
+                // override if symlinking is not permitted on the host.
+                if (! @symlink($bundledSvg, $hostSvg)) {
+                    config(['blade-icons.sets.default.path' => $bundledSvg]);
+                }
+            }
+        }
+
+        // Multisite FIRST: per-site cache/session (and media) isolation must be
+        // applied before the cache/session managers are resolved. A no-op unless
+        // the current Host maps to a config/<domain>/microweber.php site. The
+        // userfiles folder is already scoped earlier, at autoload time, via the
+        // package's helpers.php (MW_USERFILES_FOLDER_NAME = "userfiles/<site>").
+        $this->app->register(\MicroweberPackages\Multisite\MultisiteServiceProvider::class);
+
+        // Load every Microweber + third-party package FIRST, in a deterministic
+        // order (auto-discovery is disabled via composer `dont-discover: ["*"]`).
+        // Registered here — the app's single master provider — rather than in
+        // bootstrap/providers.php, keeping all wiring in one place (this is where
+        // the former Core\Providers\CoreServiceProvider was registered too).
+        $this->app->register(CoreServiceProvider::class);
+
+        // Register package API routes in register() so they load before the
+        // greedy api/{all} catch-all registered in boot() via routes/web.php.
+        $this->loadRoutesFrom(dirname(__DIR__) . '/routes/api.php');
+
+        if (is_https() or (Config::get('microweber.force_https') && !is_cli())) {
+            URL::forceScheme("https");
+        }
+
+        //  \Illuminate\Support\Facades\Vite::useBuildDirectory('build');
+
+        $this->app->register(\Illuminate\Cache\CacheServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(\MicroweberPackages\Repository\Providers\RepositoryServiceProvider::class);
+        //   $this->app->register( \MicroweberPackages\TaggableFileCache\TaggableFileCacheServiceProvider::class);
+
+
+//        $this->register(new ViewServiceProvider($this));
+//        $this->register(new SessionServiceProvider($this));
+//        $this->register(new FilesystemServiceProvider($this));
+        //  $this->register(new TaggableFileCacheServiceProvider($this));
+        $this->registerLaravelProviders();
+        $this->registerLaravelAliases();
+
+        $this->app->singleton('mw_migrator', function ($app) {
+            $repository = $app['migration.repository'];
+            return new MicroweberMigrator($repository, $app['db'], $app['files'], $app['events']);
+        });
+
+        // The db-installer package is schema-agnostic; inject this app's system
+        // schema providers (MicroweberPackages\Install\InstallSchemas) here so
+        // callers resolve a ready-to-run installer from the container.
+        $this->app->bind(\MicroweberPackages\DbInstaller\DbInstaller::class, function () {
+            return (new \MicroweberPackages\DbInstaller\DbInstaller())
+                ->setSystemSchemas(\MicroweberPackages\Install\InstallSchemas::get());
+        });
+
+        //  $this->app->register(TranslationServiceProvider::class);
+
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ServeTestCommand::class,
+                ServeCodeCoverageTestCommand::class,
+
+            ]);
+
+        }
+
+
+        $this->app->register(ConfigServiceProvider::class);
+
+        //$this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        if (app()->bound('debugbar')) {
+
+            if (config('debugbar.enabled')) {
+                $this->loadRoutesFrom(dirname(__DIR__) . '/routes/debugbar-routes.php');
+                \Fruitcake\LaravelDebugbar\Facades\Debugbar::enable();
+            } else {
+                \Fruitcake\LaravelDebugbar\Facades\Debugbar::disable();
+            }
+        }
+
+
+        $this->app->register(FilamentRegistryServiceProvider::class);
+        // Set default scope to match the Microweber admin panel provider
+        // so module registrations without explicit scope land in the admin panel.
+        $registryManager = $this->app->make(FilamentRegistryManager::class);
+        $registryManager->setDefaultScope(FilamentAdminPanelProvider::class);
+
+
+
+        $this->app->register(\MicroweberPackages\FormBuilder\Providers\FormBuilderServiceProvider::class);
+
+        $this->app->register(\MicroweberPackages\FileUploader\FileUploaderServiceProvider::class);
+
+        // Autoload-only package (PSR-4 in root composer.json, no composer require),
+        // so its extra.laravel.providers is not auto-discovered — register manually,
+        // like FileUploader above. Loads the 'mw-modal-teleport' view namespace the
+        // ModalTeleportPlugin render hook renders.
+        $this->app->register(\MicroweberPackages\FilamentModalTeleport\ModalTeleportServiceProvider::class);
+
+        $this->setEnvironmentDetection();
+        $this->registerUtils();
+
+        $this->registerSingletonProviders();
+
+        // Register the system licenses package with the CMS-specific validator.
+        $this->app->singleton(
+            \MicroweberPackages\SystemLicenses\Contracts\LicenseValidatorInterface::class,
+            \MicroweberPackages\App\Managers\MicroweberLicenseValidator::class
+        );
+        $this->app->register(\MicroweberPackages\SystemLicenses\SystemLicensesServiceProvider::class);
+        $this->app->register(\MicroweberPackages\CdnSync\CdnSyncServiceProvider::class);
+
+        $this->app->register(MicroweberServiceProvider::class);
+
+
+        //    $this->registerHtmlCollective();
+        //   $this->registerMarkdown();
+
+
+//        $this->app->instance('config', new ConfigSave($this->app));
+        // Config provider is already registered above in register()
+
+        if (!defined('ADMIN_PREFIX')) {
+            define('ADMIN_PREFIX', mw_admin_prefix_url_legacy());
+        }
+
+
+        //  URL::forceRootUrl( site_url());
+//
+//        $is_installed = mw_is_installed();
+//        if($is_installed) {
+//            //asset_url config
+//            if (!Config::get('app.asset_url')) {
+//                Config::set('app.asset_url', site_url());
+//            }
+//        }
+
+        $is_installed = mw_is_installed();
+        //      $this->aliasInstance->alias('Carbon', 'Carbon\Carbon');
+
+
+        if ($this->app->environment('local', 'testing')) {
+            // DuskPackageServiceProvider lives in autoload-DEV; when microweber is
+            // required as a non-dev dependency into a host app the class isn't
+            // autoloadable, so guard on existence (registers in the monorepo where
+            // the dev autoload is present; skipped gracefully in a standalone host).
+            if (is_cli() && class_exists(DuskPackageServiceProvider::class)) {
+                // $this->app->register(CollisionServiceProvider::class);
+                $this->app->register(DuskPackageServiceProvider::class);
+            }
+        }
+
+        if ($is_installed) {
+            //load_all_service_providers_for_modules();
+        }
+        $this->app->register(MicroweberFilamentServiceProvider::class);
+
+
+    }
+
+
+    protected function registerLaravelProviders()
+    {
+
+        foreach ($this->laravel_providers as $provider) {
+            $this->app->register($provider);
+        }
+
+        //  $this->app->bind('Illuminate\Contracts\Auth\Registrar', 'Microweber\App\Services\Registrar');
+
+        $this->app->singleton(
+            'Illuminate\Cache\StoreInterface',
+            'Utils\Adapters\Cache\CacheStore'
+        );
+
+    }
+
+    protected function registerLaravelAliases()
+    {
+        foreach ($this->laravel_aliases as $alias => $provider) {
+            $this->aliasInstance->alias($alias, $provider);
+        }
+    }
+
+    protected function setEnvironmentDetection()
+    {
+
+        if (isset($_ENV['APP_ENV'])) {
+            $this->app->detectEnvironment(function () {
+                return $_ENV['APP_ENV'];
+            });
+        }
+
+        if ($this->app->runningUnitTests()) {
+            $this->app->detectEnvironment(function () {
+                return 'testing';
+            });
+        }
+
+
+        if (isset($_SERVER['PHP_SELF']) and $_SERVER['PHP_SELF'] == 'vendor/phpunit/phpunit/phpunit') {
+            $this->app->detectEnvironment(function () {
+                return 'testing';
+            });
+        }
+
+        if (isset($_SERVER['PHP_SELF']) and $_SERVER['PHP_SELF'] == 'artisan') {
+            if (isset($_SERVER['argv'][1]) and $_SERVER['argv'][1] == 'dusk') {
+                $this->app->detectEnvironment(function () {
+                    return 'testing';
+                });
+            } else {
+
+                $this->app->detectEnvironment(function () {
+                    return app()->environment();
+                });
+            }
+        }
+
+//
+//        if (defined('MW_UNIT_TEST')) {
+//            $this->app->detectEnvironment(function () {
+//                if (!defined('MW_UNIT_TEST_ENV_FROM_TEST')) {
+//                    return 'testing';
+//                }
+//
+//                return MW_UNIT_TEST_ENV_FROM_TEST;
+//            });
+//        }
+
+
+        if (!is_cli()) {
+            $domain = null;
+            if (isset($_SERVER['HTTP_HOST'])) {
+                $domain = $_SERVER['HTTP_HOST'];
+            } else if (isset($_SERVER['SERVER_NAME'])) {
+                $domain = $_SERVER['SERVER_NAME'];
+            }
+
+
+            return $this->app->detectEnvironment(function () use ($domain) {
+//                if (getenv('APP_ENV')) {
+//                    return getenv('APP_ENV');
+//                }
+
+                if (!$domain) {
+                    return app()->environment();
+                }
+
+                // Delegate to the multisite package so host→site resolution has a
+                // single source of truth (incl. path-traversal hardening). Falls
+                // back to the original inline check if the package is absent.
+                if (class_exists(\MicroweberPackages\Multisite\MultisiteManager::class)) {
+                    $site = \MicroweberPackages\Multisite\MultisiteManager::detectSiteFromHost($domain, config_path());
+                    if ($site !== null) {
+                        return $site;
+                    }
+                    return app()->environment();
+                }
+
+                $port = explode(':', $domain);
+
+                $domain = str_ireplace('www.', '', $domain);
+
+                if (isset($port[1])) {
+                    $domain = str_ireplace(':' . $port[1], '', $domain);
+                }
+
+                if (is_dir(config_path($domain)) and is_file(config_path($domain) . '/microweber.php')) {
+                    return strtolower($domain);
+                }
+                return app()->environment();
+
+
+            });
+        }
+
+
+    }
+
+    protected function registerUtils()
+    {
+        $this->app->bind(HttpService::class, function ($app) {
+            return new HttpService($app);
+        });
+
+        $this->app->singleton(FormatService::class, function ($app) {
+            return new FormatService();
+        });
+
+        $this->app->singleton('parser', function ($app) {
+            return new Parser($app);
+        });
+
+        $this->app->singleton('browser_agent', function ($app) {
+            return new Agent();
+        });
+    }
+
+    protected function registerSingletonProviders()
+    {
+        $providers = [
+            'ui' => 'Ui',
+            'update' => 'UpdateManager',
+            'cache_manager' => 'CacheManager',
+            'config_manager' => 'ConfigurationManager',
+            // notifications_manager is provided by packages/microweber-notification
+            //    'log_manager' => 'LogManager',
+            'permalink_manager' => 'PermalinkManager',
+            //    'layouts_manager' => 'LayoutsManager',
+            'lang_helper' => 'Helpers\\Lang'
+        ];
+
+        foreach ($providers as $alias => $class) {
+            $this->app->singleton($alias, function ($app) use ($class) {
+                $class = 'MicroweberPackages\\App\Managers\\' . $class;
+
+                return new $class($app);
+            });
+        }
+
+//        $this->app->singleton('modules', function($app) use ($class) {
+//           return new ModuleManager($app);
+//        });
+
+    }
+
+    protected function registerHtmlCollective()
+    {
+//        $this->app->register('Collective\Html\HtmlServiceProvider');
+//
+//        $this->aliasInstance->alias('Form', 'Collective\Html\FormFacade');
+//        $this->aliasInstance->alias('HTML', 'Collective\Html\HtmlFacade');
+    }
+
+    protected function registerMarkdown()
+    {
+        $this->app->register('GrahamCampbell\Markdown\MarkdownServiceProvider');
+
+        $this->aliasInstance->alias('Markdown', 'GrahamCampbell\Markdown\Facades\Markdown');
+    }
+
+    public function boot(\Illuminate\Routing\Router $router)
+    {
+        View::addNamespace('app', __DIR__ . '/../resources/views');
+
+
+        //   \Illuminate\Support\Facades\Vite::useBuildDirectory('build');
+
+        if (defined('MW_SERVED_FROM_BASE_PATH')) {
+            app()->usePublicPath(base_path() . '/public');
+            \Illuminate\Support\Facades\Vite::useBuildDirectory('public/build');
+        }
+
+        //set app.asset_url
+
+
+//        if (!config::get('app.asset_url')) {
+//            $this->app->singleton('url', function ($app) {
+//                $routes = $app['router']->getRoutes();
+//
+//                // The URL generator needs the route collection that exists on the router.
+//                // Keep in mind this is an object, so we're passing by references here
+//                // and all the registered routes will be available to the generator.
+//                $app->instance('routes', $routes);
+//
+//                return new UrlGenerator(
+//                    $routes, $app->rebinding(
+//                    'request', function ($app, $request) {
+//                    $app['url']->setRequest($request);
+//                }
+//                ), site_url('public')
+//                );
+//            });
+//        }
+
+
+        DatabaseManager::add_table_model('content', Content::class);
+        DatabaseManager::add_table_model('media', Media::class);
+
+        if (is_cli()) {
+            $this->commands('MicroweberPackages\Console\Commands\ResetCommand');
+        }
+
+        // If installed load module functions and set locale
+        if (mw_is_installed()) {
+
+            if (DB::Connection() instanceof \Illuminate\Database\SQLiteConnection) {
+
+                DB::connection('sqlite')->getPdo()->sqliteCreateFunction('regexp',
+                    function ($pattern, $data, $delimiter = '~', $modifiers = 'isuS') {
+                        if (isset($pattern, $data) === true) {
+                            return preg_match(sprintf('%1$s%2$s%1$s%3$s', $delimiter, $pattern, $modifiers), $data) > 0;
+                        }
+                        return;
+                    }
+                );
+
+                DB::connection('sqlite')->getPdo()->sqliteCreateFunction('md5', 'md5');
+
+//                // https://nik.software/sqlite-optimisations-in-laravel/
+//                // https://gist.github.com/eusonlito/d8fc0462cf51fb8e89bde22c264a0c30
+//                DB::connection('sqlite')
+//                    ->statement('
+//                PRAGMA journal_mode = WAL;
+//                COMMIT;
+//                ');
+
+            }
+
+            //    load_all_functions_files_for_modules();
+            //load_all_service_providers_for_modules();
+            //load_all_functions_files_for_modules();
+            //load_service_providers_for_template();
+            //load_functions_files_for_template();
+
+            if (function_exists('is_lang_correct')) {
+                $this->setupAppLocale();
+            }
+            if (is_cli()) {
+
+                $this->commands(OptionCommand::class);
+                $this->commands(UpdateCommand::class);
+                $this->commands(ModuleCommand::class);
+                $this->commands(ReloadDatabaseCommand::class);
+                $this->commands(PackageInstallCommand::class);
+                $this->commands(AddLicenseKeyCommand::class);
+                $this->commands(VendorAssetsSymlinkCommand::class);
+                $this->commands(MakeDuskColorPaletteTestCommand::class);
+                $this->commands(InstallCommand::class);
+
+            }
+        } else {
+            // Otherwise register the install command
+            $this->commands(InstallCommand::class);
+        }
+
+        //    $this->app->register(AdminRouteServiceProvider::class);
+
+//        if (class_exists(\App\Providers\AppServiceProvider::class)) {
+//            app()->register(\App\Providers\AppServiceProvider::class);
+//        }
+
+        $this->loadRoutesFrom(dirname(__DIR__) . '/routes/web.php');
+
+        if (mw_is_installed()) {
+            EventManager::trigger('mw.after.boot', $this);
+        }
+
+        // >>> MW Kernel add
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\MicroweberPackages\App\Http\Middleware\TrustProxies::class);
+        //    $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware( \Illuminate\Http\Middleware\TrustProxies::class);
+        //   $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\Fruitcake\Cors\HandleCors::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\MicroweberPackages\App\Http\Middleware\CheckForMaintenanceMode::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\Illuminate\Foundation\Http\Middleware\ValidatePostSize::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\MicroweberPackages\App\Http\Middleware\TrimStrings::class);
+        // $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\Illuminate\Session\Middleware\StartSession::class);
+        //   $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\MicroweberPackages\App\Http\Middleware\StartSessionExtended::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class);
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware(LocaleRedirectMiddleware::class);
+        /*
+                //  $router->pushMiddlewareToGroup('web', AuthenticateSessionForUser::class);
+                $router->pushMiddlewareToGroup('web', \Illuminate\Session\Middleware\StartSession::class);
+                $router->pushMiddlewareToGroup('web', \Illuminate\Cookie\Middleware\EncryptCookies::class);
+                $router->pushMiddlewareToGroup('web', \Illuminate\View\Middleware\ShareErrorsFromSession::class);
+                $router->pushMiddlewareToGroup('web', AuthenticateSession::class);
+                // $router->pushMiddlewareToGroup('web', \MicroweberPackages\App\Http\Middleware\VerifyCsrfToken::class);
+                $router->pushMiddlewareToGroup('web', \Illuminate\Routing\Middleware\SubstituteBindings::class);
+               // $router->pushMiddlewareToGroup('web',  LocaleRedirectMiddleware::class);
+                // AddQueuedCookiesToResponse::class,*/
+
+        $router->aliasMiddleware('auth', \MicroweberPackages\App\Http\Middleware\Authenticate::class);
+        $router->aliasMiddleware('auth.basic', \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class);
+        $router->aliasMiddleware('bindings', \Illuminate\Routing\Middleware\SubstituteBindings::class);
+        $router->aliasMiddleware('cache.headers', \Illuminate\Http\Middleware\SetCacheHeaders::class);
+        $router->aliasMiddleware('can', \Illuminate\Auth\Middleware\Authorize::class);
+        $router->aliasMiddleware('guest', \MicroweberPackages\App\Http\Middleware\RedirectIfAuthenticated::class);
+        $router->aliasMiddleware('password.confirm', \Illuminate\Auth\Middleware\RequirePassword::class);
+        $router->aliasMiddleware('signed', \Illuminate\Routing\Middleware\ValidateSignature::class);
+        $router->aliasMiddleware('throttle', \MicroweberPackages\App\Http\Middleware\ThrottleExternalRequests::class);
+        $router->aliasMiddleware('verified', \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class);
+        $router->aliasMiddleware('xss', \MicroweberPackages\App\Http\Middleware\XSS::class);
+        $router->aliasMiddleware('remove_html', \MicroweberPackages\App\Http\Middleware\RemoveHtml::class);
+        //    $router->aliasMiddleware('admin', \MicroweberPackages\Admin\Http\Middleware\Admin::class);
+        $router->aliasMiddleware('api_auth', \MicroweberPackages\App\Http\Middleware\ApiAuth::class);
+        $router->aliasMiddleware('allowed_ips', \MicroweberPackages\App\Http\Middleware\AllowedIps::class);
+
+
+        $router->pushMiddlewareToGroup('admin', \Illuminate\Session\Middleware\StartSession::class);
+        $router->pushMiddlewareToGroup('admin', \Illuminate\Cookie\Middleware\EncryptCookies::class);
+        $router->pushMiddlewareToGroup('admin', \Illuminate\View\Middleware\ShareErrorsFromSession::class);
+        $router->pushMiddlewareToGroup('admin', AuthenticateSession::class);
+        $router->pushMiddlewareToGroup('admin', \MicroweberPackages\Admin\Http\Middleware\Admin::class);
+
+
+        //$router->pushMiddlewareToGroup('api', \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class);
+
+        $router->pushMiddlewareToGroup('api', \Illuminate\Session\Middleware\StartSession::class);
+        $router->pushMiddlewareToGroup('api', \Illuminate\Cookie\Middleware\EncryptCookies::class);
+        $router->pushMiddlewareToGroup('api', \Illuminate\View\Middleware\ShareErrorsFromSession::class);
+        $router->pushMiddlewareToGroup('api', AuthenticateSession::class);
+
+
+        $router->middlewareGroup('public.web', [
+            'xss',
+            TrimStrings::class,
+            MultilanguageMiddleware::class,
+            // AuthenticateSessionForUser::class,
+        ]);
+
+        $router->middlewareGroup('api', [
+            'xss',
+
+            TrimStrings::class,
+            // 'throttle:1000,1',
+            // 'api_auth'
+        ]);
+
+        $router->middlewareGroup('api.user', [
+            'xss',
+            TrimStrings::class,
+            // 'throttle:1000,1',
+            'api_auth'
+        ]);
+        $router->middlewareGroup('api.public', [
+            'xss',
+            TrimStrings::class,
+            //   'throttle:1000,1'
+        ]);
+        $router->middlewareGroup('api.static', [
+            \MicroweberPackages\App\Http\Middleware\SessionlessMiddleware::class,
+            \Illuminate\Http\Middleware\CheckResponseForModifications::class
+        ]);
+
+
+        // <<< MW Kernel add
+
+
+        $this->app->terminating(function () {
+            // possible fix of mysql error https://github.com/laravel/framework/issues/18471
+            // user already has more than 'max_user_connections' active connections
+            // Skip disconnect during unit tests to preserve test transactions
+            if (!app()->runningUnitTests()) {
+                DB::disconnect();
+            }
+        });
+    }
+
+
+
+//    /**
+//     * @deprecated
+//     */
+//    public function loadPackagesComposerJson()
+//    {
+//        $dir = dirname(dirname(__DIR__));
+//
+//        $cached = base_path('bootstrap/cache/microweber_packages.json');
+//        if (is_file($cached) and (time() - filemtime($cached) >= 15 * 60)) { // 30 minutes ago
+//            $cache_content = json_decode(file_get_contents($cached), TRUE);
+//            if (is_array($cache_content) && !empty($cache_content)) {
+//                foreach ($cache_content as $file) {
+//                    $file_path_inlude = $dir . $file;
+//                    if (is_file($file_path_inlude)) {
+//                        require_once($file_path_inlude);
+//                    }
+//                }
+//                return;
+//            }
+//        }
+//
+//        $files_map = [];
+//        $packages = glob("$dir/*/composer.json");
+//
+//        //find a php file in each folder and get its realpath
+//        foreach ($packages as $filename) {
+//
+//            $phpfile = realpath($filename);
+//            $cont = @json_decode(@file_get_contents($phpfile), 1);
+//
+//            if (isset($cont['autoload'])) {
+//                if (isset($cont['autoload']['files']) and is_array($cont['autoload']['files']) and !empty($cont['autoload']['files'])) {
+//                    foreach ($cont['autoload']['files'] as $file) {
+//                        $package_dir = dirname($phpfile) . DS;
+//                        $file_path = $package_dir . $file;
+//                        if (is_file($file_path)) {
+//                            $file_path_save = $file_path;
+//                            $file_path_save = str_replace($dir, '', $file_path_save);
+//                            $files_map[] = $file_path_save;
+//
+//                            require_once($file_path);
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//
+//        if (!empty($files_map)) {
+//            file_put_contents($cached, json_encode($files_map));
+//        }
+//    }
+
+    private function setupAppLocale()
+    {
+
+         if (MultilanguageHelpers::multilanguageIsEnabled()) {
+
+             if(!app()->bound('multilanguage_repository')){
+                 return;
+             }
+
+
+
+            $isLocaleChangedFromMultilanguageLogics = false;
+
+            $currentUri = request()->path();
+            if (is_ajax()) {
+                $currentUri = url_current(true);
+            }
+
+
+            $langCookie = request()->cookie('lang');
+            $skip_items = ['api', 'token', '_token'];
+            $localeRedirect = request()->get('localeRedirect');
+            if ($localeRedirect) {
+                return;
+            }
+
+
+            $localeIsChangedFromGetRequest = false;
+            $locale = request()->get('locale');
+            if (is_lang_correct($locale)) {
+                $localeIsChangedFromGetRequest = true;
+                $isLocaleChangedFromMultilanguageLogics = true;
+                // $localeSettings = app()->multilanguage_repository->getSupportedLocaleByLocale($locale);
+                $localeSettings = app()->multilanguage_repository->getSupportedLocale($locale);
+                if (!empty($localeSettings) && isset($localeSettings['is_active']) && $localeSettings['is_active'] == 1) {
+                    change_language_by_locale($locale, true);
+                }
+
+//                if ($locale and $localeIsChangedFromGetRequest) {
+//                    $localeRedirect = request()->get('localeRedirect');
+//                    if ($localeRedirect) {
+//                        $linkSegments = url_segment(-1, $currentUri);
+//                        $linkSegments = array_filter($linkSegments, 'trim');
+//
+//                        if (!in_array($linkSegments[0], $skip_items)) {
+//                            $localeSettings = app()->multilanguage_repository->getSupportedLocale($linkSegments[0]);
+//                            $localeSettingsNew = app()->multilanguage_repository->getSupportedLocale($locale);
+//                            if ($localeSettings and isset($localeSettings['locale']) && isset($localeSettings['is_active'])) {
+//                                if ($localeSettingsNew and isset($localeSettingsNew['locale']) && isset($localeSettingsNew['is_active'])) {
+//                                    if ($localeSettings['locale'] !== $localeSettingsNew['locale']) {
+//                                        $request = request();
+//                                        $link = $request->fullUrlWithoutQuery(['localeRedirect', 'locale']);
+//                                        print redirect($link);
+//                                        exit;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+            }
+
+
+            // if locale is not changed from get request we must to chek URL SLUGS
+            if (!$localeIsChangedFromGetRequest) {
+                $linkSegments = url_segment(-1, $currentUri);
+                $linkSegments = array_filter($linkSegments, 'trim');
+
+                if (!empty($linkSegments)) {
+                    if (isset($linkSegments[0]) and $linkSegments[0]) {
+
+                        if (!in_array($linkSegments[0], $skip_items)) {
+                            $localeSettings = app()->multilanguage_repository->getSupportedLocale($linkSegments[0]);
+
+                            if ($localeSettings and isset($localeSettings['locale']) && isset($localeSettings['is_active'])) {
+                                $isLocaleChangedFromMultilanguageLogics = true;
+
+                                $needToChangeLocale = true;
+                                $needToChangeLocaleCookie = true;
+                                if (isset($_COOKIE['lang']) && !empty($_COOKIE['lang'])) {
+                                    if ($_COOKIE['lang'] == $localeSettings['locale']) {
+                                        $needToChangeLocaleCookie = false;
+                                    }
+                                }
+                                //   $needToChangeLocale = true;
+                                if ($needToChangeLocale) {
+                                    change_language_by_locale($localeSettings['locale'], $needToChangeLocaleCookie);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+            // If locale is not changed from link
+            if (!$isLocaleChangedFromMultilanguageLogics) {
+
+                // If we have a lang cookie read from theere
+                if (isset($langCookie) && ($langCookie)) {
+                    $setCurrentLangTo = $langCookie;
+                } else {
+                    if (MultilanguageHelpers::multilanguageIsEnabled()) {
+                        // Set from default homepage lang settings
+                        $setCurrentLangTo = get_option('homepage_language', 'website');
+                    } else {
+                        // Set from default language language settings
+                        $setCurrentLangTo = get_option('language', 'website');
+                    }
+                }
+
+
+                if ($setCurrentLangTo && is_lang_correct($setCurrentLangTo)) {
+                    if (MultilanguageHelpers::multilanguageIsEnabled()) {
+
+                        $localeSettings = app()->multilanguage_repository->getSupportedLocaleByLocale($setCurrentLangTo);
+                        if (!empty($localeSettings) && isset($localeSettings['is_active']) && $localeSettings['is_active'] ) {
+                            set_current_lang($setCurrentLangTo);
+                        }
+                    } else {
+                        set_current_lang($setCurrentLangTo);
+                    }
+                }
+            }
+        }
+
+
+    }
+}
