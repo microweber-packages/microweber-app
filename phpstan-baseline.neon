@@ -1,1 +1,1663 @@
 parameters:
+	ignoreErrors:
+		-
+			message: '#^Constructor of class MicroweberPackages\\App\\Application has an unused parameter \$params\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Application\:\:__construct\(\) with return type void returns mixed but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$attributes_manager contains unknown class Modules\\Attributes\\Repositories\\AttributesManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$captcha_manager contains unknown class Modules\\Captcha\\Services\\CaptchaManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$cart_manager contains unknown class Modules\\Cart\\Repositories\\CartManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$cart_repository contains unknown class Modules\\Cart\\Repositories\\CartRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$category_manager contains unknown class Modules\\Category\\Repositories\\CategoryManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$category_repository contains unknown class Modules\\Category\\Repositories\\CategoryRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$checkout_manager contains unknown class Modules\\Checkout\\Repositories\\CheckoutManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$content_manager contains unknown class Modules\\Content\\Services\\ContentManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$content_repository contains unknown class Modules\\Content\\Repositories\\ContentRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$country_manager contains unknown class Modules\\Country\\Repositories\\CountryManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$coupon_service contains unknown class Modules\\Coupons\\Services\\CouponService\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$custom_field_repository contains unknown class Modules\\CustomFields\\Repositories\\CustomFieldRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$data_fields_manager contains unknown class Modules\\ContentData\\Repositories\\DataFieldsManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$fields_manager contains unknown class Modules\\CustomFields\\Services\\FieldsManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$forms_manager contains unknown class Modules\\Form\\FormsManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$invoice_service contains unknown class Modules\\Invoice\\Services\\InvoiceService\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$log_manager contains unknown class Modules\\Log\\Services\\LogManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$media_manager contains unknown class Modules\\Media\\Repositories\\MediaManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$media_repository contains unknown class Modules\\Media\\Repositories\\MediaRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$menu_manager contains unknown class Modules\\Menu\\Repositories\\MenuManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$menu_repository contains unknown class Modules\\Menu\\Repositories\\MenuRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$microweber contains unknown class MicroweberPackages\\ModuleRegistry\\ModuleRegistryManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$offer_repository contains unknown class Modules\\Offer\\Repositories\\OfferRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$order_manager contains unknown class Modules\\Order\\Repositories\\OrderManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$order_repository contains unknown class Modules\\Order\\Repositories\\OrderRepository\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$payment_method_manager contains unknown class Modules\\Payment\\Services\\PaymentMethodManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$shipping_method_manager contains unknown class Modules\\Shipping\\Services\\ShippingMethodManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$shop_manager contains unknown class Modules\\Shop\\Services\\ShopManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^PHPDoc tag @property for property MicroweberPackages\\App\\Application\:\:\$tax_manager contains unknown class Modules\\Tax\\Services\\TaxManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^Cannot use array destructuring on Illuminate\\Support\\Carbon\.$#'
+			identifier: offsetAccess.nonArray
+			count: 1
+			path: src/Console/Commands/ServeCodeCoverageTestCommand.php
+
+		-
+			message: '#^Cannot use array destructuring on Illuminate\\Support\\Carbon\.$#'
+			identifier: offsetAccess.nonArray
+			count: 1
+			path: src/Console/Commands/ServeTestCommand.php
+
+		-
+			message: '#^Class MicroweberPackages\\Monitoring\\Services\\ErrorTrackingService not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Exceptions/Handler.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Exceptions/Handler.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Exceptions\\Handler\:\:render\(\) should return Symfony\\Component\\HttpFoundation\\Response but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Exceptions/Handler.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Exceptions\\Handler\:\:\$dontFlash is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Foundation\\Exceptions\\Handler\:\:\$dontFlash\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Exceptions/Handler.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Exceptions\\Handler\:\:\$dontReport is not covariant with PHPDoc type array\<int, class\-string\<Throwable\>\> of overridden property Illuminate\\Foundation\\Exceptions\\Handler\:\:\$dontReport\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Exceptions/Handler.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$content_manager\.$#'
+			identifier: property.notFound
+			count: 7
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$module_manager\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$parser\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Response\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Constant TEMPLATE_DIR not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Function is_module not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Result of function parse_str \(void\) is used\.$#'
+			identifier: function.void
+			count: 1
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Variable \$api_function_full in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Variable \$data in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 2
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Variable \$from_url2 in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Http/Controllers/ApiController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$cache_manager\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$category_manager\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$content_manager\.$#'
+			identifier: property.notFound
+			count: 17
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$module_manager\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$option_manager\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$parser\.$#'
+			identifier: property.notFound
+			count: 4
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$permalink_manager\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$template_manager\.$#'
+			identifier: property.notFound
+			count: 5
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$update\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Call to an undefined method MicroweberPackages\\App\\Http\\Controllers\\FrontendController\:\:module\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Call to static method newDocument\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Call to static method startMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Call to static method stopMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Constant ACTIVE_SITE_TEMPLATE not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Constant CONTENT_ID not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Constant TEMPLATES_DIR not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function category_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function category_link not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function content_edit_link not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function content_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function content_link not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 5
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function is_module not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function login_url not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function module_name_decode not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function page_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function post_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function pq not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function template_dir not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Function template_name not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$is_editmode_iframe in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$is_layout_file in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$is_preview_template in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$output_cache_group might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$output_cache_id might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Variable \$page_data in isset\(\) is never defined\.$#'
+			identifier: isset.variable
+			count: 2
+			path: src/Http/Controllers/FrontendController.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$content_manager\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Http/Controllers/JsCompileController.php
+
+		-
+			message: '#^Call to static method make\(\) on an unknown class Response\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/JsCompileController.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Http/Controllers/JsCompileController.php
+
+		-
+			message: '#^Function template_dir not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Http/Controllers/JsCompileController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\Factory\:\:getFinder\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/ModuleFrontController.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\View\\Factory\:\:prependNamespace\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Http/Controllers/ModuleFrontController.php
+
+		-
+			message: '#^Call to an undefined static method MicroweberPackages\\Option\\Models\\Option\:\:where\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Http/Controllers/ModuleFrontController.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Controllers/ModuleFrontController.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Kernel\:\:\$middleware is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Foundation\\Http\\Kernel\:\:\$middleware\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Kernel.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Kernel\:\:\$middlewareGroups is not covariant with PHPDoc type array\<string, array\<int, string\>\> of overridden property Illuminate\\Foundation\\Http\\Kernel\:\:\$middlewareGroups\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Kernel.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Kernel\:\:\$routeMiddleware is not covariant with PHPDoc type array\<string, string\> of overridden property Illuminate\\Foundation\\Http\\Kernel\:\:\$routeMiddleware\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Kernel.php
+
+		-
+			message: '#^Function user_ip not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Middleware/AllowedIps.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Http\\Middleware\\AllowedIps\:\:handle\(\) should return Illuminate\\Http\\Response but returns Illuminate\\Http\\JsonResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Http/Middleware/AllowedIps.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Contracts\\Auth\\Authenticatable\:\:\$is_admin\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Middleware/ApiAuth.php
+
+		-
+			message: '#^Access to an undefined property Laravel\\Sanctum\\PersonalAccessToken\:\:\$created_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Middleware/ApiAuth.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Support\\HigherOrderTapProxy\<Laravel\\Sanctum\\PersonalAccessToken\>\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Middleware/ApiAuth.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Middleware\\CheckForMaintenanceMode\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance\:\:\$except\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Middleware/CheckForMaintenanceMode.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Middleware\\EncryptCookies\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Cookie\\Middleware\\EncryptCookies\:\:\$except\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Middleware/EncryptCookies.php
+
+		-
+			message: '#^Function change_language_by_locale not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Middleware/LocaleRedirectMiddleware.php
+
+		-
+			message: '#^Call to static method create\(\) on an unknown class GrahamCampbell\\SecurityCore\\Security\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Middleware/RemoveHtml.php
+
+		-
+			message: '#^Call to method previousUrl\(\) on an unknown class Illuminate\\Session\\SessionInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Middleware/StartSessionExtended.php
+
+		-
+			message: '#^Call to method setPreviousUrl\(\) on an unknown class Illuminate\\Session\\SessionInterface\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Http/Middleware/StartSessionExtended.php
+
+		-
+			message: '#^Parameter \$session of method MicroweberPackages\\App\\Http\\Middleware\\StartSessionExtended\:\:storeCurrentUrl\(\) has invalid type Illuminate\\Session\\SessionInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Middleware/StartSessionExtended.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Middleware\\TrimStrings\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Foundation\\Http\\Middleware\\TrimStrings\:\:\$except\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Middleware/TrimStrings.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Middleware/TrustProxies.php
+
+		-
+			message: '#^Variable \$trust_proxies in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Http/Middleware/TrustProxies.php
+
+		-
+			message: '#^Call to static method forget\(\) on an unknown class Cookie\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Middleware/VerifyCsrfToken.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Http\\Middleware\\VerifyCsrfToken\:\:addCookieToResponse\(\) should return Symfony\\Component\\HttpFoundation\\Response but empty return statement found\.$#'
+			identifier: return.empty
+			count: 1
+			path: src/Http/Middleware/VerifyCsrfToken.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Http\\Middleware\\VerifyCsrfToken\:\:\$except is not covariant with PHPDoc type array\<int, string\> of overridden property Illuminate\\Foundation\\Http\\Middleware\\PreventRequestForgery\:\:\$except\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Http/Middleware/VerifyCsrfToken.php
+
+		-
+			message: '#^Anonymous function has an unused use \$options\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: src/Http/Middleware/XSS.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Middleware/XSS.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$content$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$cookies$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$files$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$method$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$parameters$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$server$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$uri$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Http/RequestRoute.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/MwApplyUpdatesRequest.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/MwComposerInstallPackageRequest.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/MwInstallMarketItemRequest.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/MwSendAnonymousServerDataRequest.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/SaveLanguageFileContentRequest.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Http/Requests/SendLangFormToMicroweberRequest.php
+
+		-
+			message: '#^Call to an undefined method MicroweberPackages\\App\\LaravelApplication\:\:buildVersionedCachePath\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/LaravelApplication.php
+
+		-
+			message: '#^Call to an undefined method MicroweberPackages\\App\\LaravelApplication\:\:getBootstrapCacheVersionPrefix\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/LaravelApplication.php
+
+		-
+			message: '#^Call to an undefined method MicroweberPackages\\App\\LaravelApplication\:\:registerDefaultFacadeAliases\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/LaravelApplication.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Managers\\CacheManager\:\:delete\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Managers/CacheManager.php
+
+		-
+			message: '#^PHPDoc tag @var has invalid value \(\)\: Unexpected token "\\n     ", expected type at offset 70 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Managers/CacheManager.php
+
+		-
+			message: '#^PHPDoc tag @var has invalid value \(\)\: Unexpected token "\\n     ", expected type at offset 78 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Managers/CacheManager.php
+
+		-
+			message: '#^Call to an undefined static method Illuminate\\Support\\Facades\\Config\:\:save\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Managers/ConfigurationManager.php
+
+		-
+			message: '#^Result of static method Illuminate\\Support\\Facades\\Config\:\:set\(\) \(void\) is used\.$#'
+			identifier: staticMethod.void
+			count: 1
+			path: src/Managers/ConfigurationManager.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Managers/Helpers/Lang.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 4
+			path: src/Managers/Helpers/Lang.php
+
+		-
+			message: '#^PHPDoc tag @use has invalid value \(current_lang\(\)\)\: Unexpected token "\(", expected ''\<'' at offset 361 on line 16$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Managers/Helpers/Lang.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\LaravelApplication\:\:\$category_manager\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Call to static method where\(\) on an unknown class Modules\\Category\\Models\\Category\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Call to static method where\(\) on an unknown class Modules\\Content\\Models\\Content\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Call to static method where\(\) on an unknown class Modules\\Page\\Models\\Page\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Call to static method where\(\) on an unknown class Modules\\Post\\Models\\Post\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Function get_categories_for_content not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Function get_category_by_id not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Function get_page_for_category not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Managers/PermalinkManager.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\Managers\\Ui\:\:\$create_content_menu\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Managers/Ui.php
+
+		-
+			message: '#^Variable \$arr in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Managers/Ui.php
+
+		-
+			message: '#^Access to an undefined property MicroweberPackages\\App\\Managers\\UpdateManager\:\:\$composer_update\.$#'
+			identifier: property.notFound
+			count: 3
+			path: src/Managers/UpdateManager.php
+
+		-
+			message: '#^Call to method extract\(\) on an unknown class MicroweberPackages\\Utils\\Unzip\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Managers/UpdateManager.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Managers/UpdateManager.php
+
+		-
+			message: '#^Function save_option not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Managers/UpdateManager.php
+
+		-
+			message: '#^Instantiated class MicroweberPackages\\Utils\\Unzip not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Managers/UpdateManager.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Foundation\\Application\:\:detectEnvironment\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Http\\Kernel\:\:prependMiddleware\(\)\.$#'
+			identifier: method.notFound
+			count: 7
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Call to an undefined static method Illuminate\\Support\\Facades\\DB\:\:Connection\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Call to an undefined static method MicroweberPackages\\Database\\Facades\\DatabaseManager\:\:add_table_model\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Call to static method disable\(\) on an unknown class Fruitcake\\LaravelDebugbar\\Facades\\Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Call to static method enable\(\) on an unknown class Fruitcake\\LaravelDebugbar\\Facades\\Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\App\\Managers\\ConfigurationManager does not have a constructor and must be instantiated without any parameters\.$#'
+			identifier: new.noConstructor
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\App\\Managers\\Helpers\\Lang constructor invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\App\\Managers\\Ui constructor invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\App\\Utils\\Parser constructor invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\CdnSync\\CdnSyncServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\AddLicenseKeyCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\MakeDuskColorPaletteTestCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\ModuleCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\PackageInstallCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\ReloadDatabaseCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\UpdateCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Console\\Commands\\VendorAssetsSymlinkCommand not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\FileUploader\\FileUploaderServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Multisite\\MultisiteServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Pagination\\PaginationServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class Modules\\Content\\Models\\Content not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Class Modules\\Media\\Models\\Media not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Function change_language_by_locale not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Function is_lang_correct not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Instantiated class Jenssegers\\Agent\\Agent not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^Instantiated class MicroweberPackages\\DbMigrator\\MicroweberMigrator not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/AppServiceProvider.php
+
+		-
+			message: '#^PHPDoc type array of property MicroweberPackages\\App\\Providers\\EventServiceProvider\:\:\$listen is not covariant with PHPDoc type array\<string, array\<int, string\>\> of overridden property Illuminate\\Foundation\\Support\\Providers\\EventServiceProvider\:\:\$listen\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Providers/EventServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\ContentField\\ContentFieldServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Frontend\\Providers\\FrontendServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\LaravelModulesFilament\\LaravelModulesFilamentServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Livewire\\LivewireServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\MicroweberUI\\Providers\\MicroweberUIServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\ModuleRegistry\\ModuleRegistryServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Monitoring\\Providers\\MonitoringServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Pagination\\PaginationServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Queue\\Providers\\QueueEventServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Queue\\Providers\\QueueServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\SvgIcons\\SvgIconsServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class MicroweberPackages\\Update\\Providers\\UpdateMigratorServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Class Spatie\\Permission\\PermissionServiceProvider not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Providers/MicroweberServiceProvider.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Utils\\Adapters\\Cache\\LaravelCache\:\:delete\(\) should return bool but empty return statement found\.$#'
+			identifier: return.empty
+			count: 1
+			path: src/Utils/Adapters/Cache/LaravelCache.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Utils\\Adapters\\Cache\\LaravelCache\:\:save\(\) should return bool but empty return statement found\.$#'
+			identifier: return.empty
+			count: 1
+			path: src/Utils/Adapters/Cache/LaravelCache.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Utils\\Adapters\\Cache\\LaravelCache\:\:save\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: src/Utils/Adapters/Cache/LaravelCache.php
+
+		-
+			message: '#^Static method Illuminate\\Support\\Facades\\Cache\:\:flush\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Utils/Adapters/Cache/LaravelCache.php
+
+		-
+			message: '#^Call to static method newDocument\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/Adapters/Template/RenderHelpers/TemplateOptimizeLoadingHelper.php
+
+		-
+			message: '#^Function pq not found\.$#'
+			identifier: function.notFound
+			count: 10
+			path: src/Utils/Adapters/Template/RenderHelpers/TemplateOptimizeLoadingHelper.php
+
+		-
+			message: '#^Call to an undefined method MicroweberPackages\\App\\Utils\\Parser\:\:load_module_callback\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Call to static method newDocument\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 10
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Call to static method startMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Call to static method stopMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Call to static method unloadDocuments\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Constant DEFAULT_TEMPLATE_URL not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Constant THIS_TEMPLATE_URL not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Function extract_tags not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Function pq not found\.$#'
+			identifier: function.notFound
+			count: 18
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Variable \$mw_script_matches in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/Parser.php
+
+		-
+			message: '#^Variable \$data in isset\(\) is never defined\.$#'
+			identifier: isset.variable
+			count: 4
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Variable \$modinner in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Variable \$mw_blade_matches in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Variable \$mw_elements_array in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Variable \$mw_script_matches in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 4
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Variable \$parser_mem_crc in isset\(\) is never defined\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Utils/ParserEditFieldsTrait.php
+
+		-
+			message: '#^Call to static method newDocument\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserHelpers/ParserLayoutItem.php
+
+		-
+			message: '#^Method MicroweberPackages\\App\\Utils\\ParserHelpers\\ParserLayoutItem\:\:getPq\(\) has invalid return type phpQueryObject\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserHelpers/ParserLayoutItem.php
+
+		-
+			message: '#^Variable \$that in isset\(\) is never defined\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Utils/ParserLoadModuleTrait.php
+
+		-
+			message: '#^Access to offset ''module'' on an unknown class phpQueryObject\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to an undefined static method MicroweberPackages\\Module\\Facades\\ModuleAdmin\:\:getViewComponent\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to method __destruct\(\) on an unknown class phpQueryObject\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to method htmlOuter\(\) on an unknown class phpQueryObject\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to static method call\(\) on an unknown class App\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to static method newDocument\(\) on an unknown class phpQuery\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to static method startMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Call to static method stopMeasure\(\) on an unknown class Debugbar\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Constant DEFAULT_TEMPLATE_URL not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Constant THIS_TEMPLATE_URL not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Function category_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Function content_id not found\.$#'
+			identifier: function.notFound
+			count: 9
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Function page_id not found\.$#'
+			identifier: function.notFound
+			count: 3
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Function post_id not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Function pq not found\.$#'
+			identifier: function.notFound
+			count: 27
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^PHPDoc tag @var has invalid value \(\$layout_obj ParserLayoutItem\)\: Unexpected token "\$layout_obj", expected type at offset 20 on line 2$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^PHPDoc tag @var has invalid value \(\$mod_obj ParserModuleItem\)\: Unexpected token "\$mod_obj", expected type at offset 36 on line 2$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Undefined variable\: \$data$#'
+			identifier: variable.undefined
+			count: 4
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$layoutmatches in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$local_mw_replaced_modules in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$module_name in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$mw_script_matches in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 4
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$parser_mem_crc in isset\(\) is never defined\.$#'
+			identifier: isset.variable
+			count: 1
+			path: src/Utils/ParserProcessor.php
+
+		-
+			message: '#^Variable \$filter in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: src/functions/api.php
+
+		-
+			message: '#^Binary operation "\+" between string and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/functions/bootstrap.php
+
+		-
+			message: '#^Call to static method getInstance\(\) on an unknown class Container\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/functions/common.php
+
+		-
+			message: '#^Default value of the parameter \#4 \$expiration_in_seconds \(false\) of function cache_save\(\) is incompatible with type int\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: src/functions/common.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/functions/common.php
+
+		-
+			message: '#^Function is_module not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/functions/common.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$expiration_in_seconds$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/functions/common.php
+
+		-
+			message: '#^PHPDoc tag @use has invalid value \(current_lang\(\)\)\: Unexpected token "\(", expected ''\<'' at offset 301 on line 16$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/functions/lang.php
+
+		-
+			message: '#^PHPDoc tag @use has invalid value \(current_lang\(\)\)\: Unexpected token "\(", expected ''\<'' at offset 316 on line 16$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/functions/lang.php
+
+		-
+			message: '#^Class Modules\\Category\\Models\\Category not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\ContentData\\Models\\ContentData not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\ContentField\\Models\\ContentField not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\Content\\Models\\Content not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\CustomFields\\Models\\CustomField not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\CustomFields\\Models\\CustomFieldValue not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\Media\\Models\\Media not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\Menu\\Models\\Menu not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Class Modules\\Tag\\Models\\Tag not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/functions/laravel.php
+
+		-
+			message: '#^Function get_option not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/functions/other.php
+
+		-
+			message: '#^Function is_admin not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/functions/other.php
+
+		-
+			message: '#^Function must_have_access not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/functions/other.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$params$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/functions/other.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$value$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/functions/other.php
+
+		-
+			message: '#^Function content_link not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/functions/url.php
+
+		-
+			message: '#^Function media_base_path not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: src/functions/url.php
+
+		-
+			message: '#^Function media_base_url not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: src/functions/url.php
+
+		-
+			message: '#^Binary operation "\+" between string and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/resources/includes/debug.php
+
+		-
+			message: '#^Call to static method getQueryLog\(\) on an unknown class DB\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/resources/includes/debug.php
+
+		-
+			message: '#^Constant T not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: src/resources/includes/debug.php
+
+		-
+			message: '#^Variable \$e might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/resources/includes/error.php
+
+		-
+			message: '#^Call to static method current\(\) on an unknown class UrlManager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/resources/includes/toolbar/toolbar_back.php
+
+		-
+			message: '#^Class Barryvdh\\Debugbar\\Middleware\\DebugbarEnabled not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/routes/debugbar-routes.php
